@@ -17,8 +17,8 @@ class Client:
         self.connection = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
         self.messageParser = MessageParser()
-        self.host = host
-        self.server_port = server_port
+        self.host = "78.91.17.11"
+        self.server_port = 9998
         # TODO: Finish init process with necessary code
         self.run()
         self.messageReceiver = MessageReceiver(self,self.connection)

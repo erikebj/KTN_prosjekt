@@ -50,6 +50,9 @@ class ClientHandler(SocketServer.BaseRequestHandler):
         pass
 
     def msg(self, content):
+        for user in Users:
+            if user != self:
+                user.sender(self.name,'message',content)
         pass
 
     def names(self, content):
