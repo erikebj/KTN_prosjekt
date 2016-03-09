@@ -17,7 +17,7 @@ class Client:
         self.connection = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
         self.messageParser = MessageParser()
-        self.host = "78.91.17.11"
+        self.host = ""
         self.server_port = 9998
         # TODO: Finish init process with necessary code
         self.run()
@@ -35,6 +35,7 @@ class Client:
         quit()
 
     def receive_message(self, message):                     # Recieving a message from the messagereciver, parses this
+        print message
         self.printer(*self.messageParser.parse(message))        # message and then calls for a print.
 
     def printer(self,time,sender,message_type,message):     # Printing to the user

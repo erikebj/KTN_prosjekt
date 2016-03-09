@@ -8,7 +8,7 @@ Variables and functions that must be used by all the ClientHandler objects
 must be written here (e.g. a dictionary for connected clients)
 """
 
-Users = []
+users = []
 class ClientHandler(SocketServer.BaseRequestHandler):
     """
     This is the ClientHandler class. Everytime a new client connects to the
@@ -43,17 +43,17 @@ class ClientHandler(SocketServer.BaseRequestHandler):
 
     def login(self, content):
         self.name = content
-        Users.append(self)
+        users.append(self)
         self.sender("system", "info", "Welcome to the server")
 
     def logout(self, content):
-        pass
+        users.remove(self)
 
     def msg(self, content):
-        for user in Users:
+        print content
+        for user in users:
             if user != self:
-                user.sender(self.name,'message',content)
-        pass
+                user.sender(self.name, "message", content)
 
     def names(self, content):
         pass
@@ -88,7 +88,7 @@ if __name__ == "__main__":
 
     No alterations are necessary
     """
-    HOST, PORT = 'localhost', 9998
+    HOST, PORT = '', 9998
     print 'Server running...'
 
     # Set up and initiate the TCP server
