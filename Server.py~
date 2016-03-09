@@ -62,7 +62,7 @@ class ClientHandler(SocketServer.BaseRequestHandler):
         pass
 
     def sender(self, sender,response, content):
-        package = json.dumps({"timestamp": strftime("%Y-%m-%d %H:%M:%S", gmtime()),
+        package = json.dumps({"timestamp": strftime("%Y-%m-%d %H:%M:%S", gmtime())
             "sender": sender, 
             "response": response,
             "content": content})

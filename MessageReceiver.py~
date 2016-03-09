@@ -24,8 +24,21 @@ class MessageReceiver(Thread):
         # TODO: Finish initialization of MessageReceiver
 
     def run(self):
+        self.listen()
+
+
+
+        # TODO: Make MessageReceiver receive and handle payloads
+        pass
+
+
+    def listen(self):
+        print "listen"
         recv_message = self.myconnection.recv(4096)
         self.myclient.receive_message(recv_message)
+        print "messagereceiver"
+        print recv_message
+        # Done ?
 
     def sendMessage(self,data):
         message_to_be_sent = json.dumps({"request": "msg","content":data})

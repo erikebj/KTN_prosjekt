@@ -38,10 +38,9 @@ class Client:
         self.printer(*self.messageParser.parse(message))        # message and then calls for a print.
 
     def printer(self,time,sender,message_type,message):     # Printing to the user
-        print "\n<<<<<<<      >>>>>>>"
-        print time +" : " + sender + " : " + message_type
+        print "<<<<<<<      >>>>>>>"
+        print time +": " + sender + ": " + message_type
         print ": " + message
-
 
     def send_payload(self, data):
         if data == "getHistory":
