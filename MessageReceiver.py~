@@ -27,6 +27,9 @@ class MessageReceiver(Thread):
         while True:
             recv_message = self.myconnection.recv(4096)
             while recv_message.count("}") >= 1:
+                print recv_message
+                print "_____________"
+                print recv_message[:recv_message.find("}")+1]
                 self.myclient.receive_message(recv_message[:recv_message.find("}")+1])
                 recv_message = recv_message[recv_message.find("}")+1:]
 

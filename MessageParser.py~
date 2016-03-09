@@ -14,6 +14,8 @@ class MessageParser():
         }
 
     def parse(self, payload):
+       
+        print payload
         payload = json.loads(payload)
         
         if "request" in payload.keys():

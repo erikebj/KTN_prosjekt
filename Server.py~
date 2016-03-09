@@ -52,7 +52,6 @@ class ClientHandler(SocketServer.BaseRequestHandler):
         users.append(self)
         self.sender("system", "info", "Welcome to the server " + self.name)
         self.history(None)
-
     def logout(self, content):
         users.remove(self)
 
