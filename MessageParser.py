@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import json
 
 
@@ -13,6 +14,7 @@ class MessageParser():
         }
 
     def parse(self, payload):
+        print "parsing"
         payload = json.loads(payload)
         
         if "request" in payload.keys():
@@ -21,7 +23,10 @@ class MessageParser():
             else:
                 pass
         else:
-            return self.possible_responses[payload['response']](payload)
+            if payload["response"] in self.possible_responses:
+                return self.possible_responses[payload['response']](payload)
+            else:
+                pass
       
 
     def parse_error(self, payload):
