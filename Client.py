@@ -34,10 +34,10 @@ class Client:
         self.connection.close()
         quit()
 
-    def receive_message(self, message):                     # Recieving a message from the messagereciver, parses this
-        self.printer(*self.messageParser.parse(message))        # message and then calls for a print.
+    def receive_message(self, message):
+        self.messageParser.parse(self.printer, message)
 
-    def printer(self,time,sender,message_type,message):     # Printing to the user
+    def printer(self,time,sender,message_type,message):
         melding = ("\n[" +
                 time +" : " + message_type + "] " +
                 sender+ ": " + message + "\n>>> ")
@@ -51,15 +51,11 @@ class Client:
         elif data == "getHelp":
             self.messageReceiver.getHelp()
         else:
-            melding = data
-            self.messageReceiver.sendMessage(melding)
+            self.messageReceiver.sendMessage(data)
 
     def login(self, data):
-        melding = {"request": "login", "content": data}
-        innlogging = self.messageParser.parse_login(melding)
-        self.messageReceiver.send_login(innlogging)           # Login sent to Reciever as a JSON object.
-        
-    # More methods may be needed!
+        brukerNavn = self.messageParser.parse_login(data)
+        self.messageReceiver.send_login(brukerNavn)
 
 
 if __name__ == '__main__':

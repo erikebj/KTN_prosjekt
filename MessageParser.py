@@ -13,59 +13,59 @@ class MessageParser():
             'login': self.parse_login
         }
 
-    def parse(self, payload):
+    def parse(self,printer, payload):
         payload = json.loads(payload)
         
         if "request" in payload.keys():
             if payload['request'] in self.possible_responses:
-                return self.possible_responses[payload['request']](payload)
+                return self.possible_responses[payload['request']](printer, payload)
             else:
                 pass
         else:
             if payload["response"] in self.possible_responses:
-                return self.possible_responses[payload['response']](payload)
+                return self.possible_responses[payload['response']](printer, payload)
             else:
                 pass
       
 
-    def parse_error(self, payload):
+    def parse_error(self, printer, payload):
         data = json.loads(payload)
         time = data['timestamp']
         sender = data['sender']
         message_type = "Error"
         message = data['content']
-        return (time,sender,message_type,message)
+        printer(time,sender,message_type,message)
     
-    def parse_info(self, data):
+    def parse_info(self, printer, data):
         time = data['timestamp']
         sender = data['sender']
         message_type = "Info"
         message = data['content']
-        return (time,sender,message_type,message)
+        printer(time,sender,message_type,message)
 
-
-
-    def parse_message(self, data):
+    def parse_message(self, printer, data):
         time = data['timestamp']
         sender = data['sender']
         message_type = "Message"
         message = data['content']
-        return (time,sender,message_type,message)
+        printer(time,sender,message_type,message)
 
-    def parse_history(self, payload):
-        # We need a list of some sort here due to multiple objects arriving.
-        #TODO Add some type of list
-        data = json.loads(payload)
-        time = data['timestamp']
-        sender = data['sender']
+    def parse_history(self, printer, payload):
+        message = payload["content"]
+        time = payload['timestamp']
+        sender = payload['sender']
         message_type = "History"
-        message = data['content']
-        return (time,sender,message_type,message)
+        printer(time, sender, message_type, "Here is a list of all previous messages")
+        for objekt in message:
+            data = json.loads(objekt)
+            time = data["timestamp"]
+            sender = data["sender"]
+            message_type = "Message"
+            message = data["content"]
+            printer(time,sender,message_type,message)
     
-    def parse_login(self, payload):
-        name = payload['content']
+    def parse_login(self, name):
         for letter in name:
             if not(letter.isalpha() or letter.isdigit()):
                 raise ValueError("Your name can only contain a-z, A-Z, 0-9!!!")
-        return json.dumps(payload)
-    # Include more methods for handling the different responses...
+        return name

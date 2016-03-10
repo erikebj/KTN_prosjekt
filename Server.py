@@ -34,8 +34,8 @@ class ClientHandler(SocketServer.BaseRequestHandler):
                 "help": self.helper,
                 "history": self.history
             }
-        # Loop that listens for messages from the client
         while True:
+            # Loop that listens for messages from the client
             received_string = self.connection.recv(4096)
             string = json.loads(received_string)
             if string["request"] in self.responses:
@@ -80,8 +80,10 @@ class ClientHandler(SocketServer.BaseRequestHandler):
 
 
     def history(self, content):
-        for melding in history:
-            self.connection.send(melding)
+        self.sender("system", "history", history)
+        #for melding in history:
+        #    self.connection.send(melding)
+        
 
     def sender(self, sender,response, content):
         package = self.formatMessage(sender, response, content)

@@ -21,19 +21,19 @@ class MessageReceiver(Thread):
         self.myconnection = conn
         self.myclient = client
 
-        # TODO: Finish initialization of MessageReceiver
-
     def run(self):
         while True:
-            recv_message = self.myconnection.recv(4096)
-            while recv_message.count("}") >= 1:
-                self.myclient.receive_message(recv_message[:recv_message.find("}")+1])
-                recv_message = recv_message[recv_message.find("}")+1:]
+            recv_message = self.myconnection.recv( 4096 )
+            self.myclient.receive_message( recv_message )
+        #while True:
+        #    recv_message = self.myconnection.recv(4096)
+        #    while recv_message.count("}") >= 1:
+        #        self.myclient.receive_message(recv_message[:recv_message.find("}")+1])
+        #        recv_message = recv_message[recv_message.find("}")+1:]
 
     def sendMessage(self,data):
         message_to_be_sent = json.dumps({"request": "msg","content":data})
         self.myconnection.send(message_to_be_sent)
-            #Done!
 
     def getHistory(self):
         message_to_be_sent = json.dumps({"request":"history","content":None})
@@ -53,4 +53,5 @@ class MessageReceiver(Thread):
 
 
     def send_login(self,login):
-        self.myconnection.send(login)
+        message = json.dumps({"request":"login", "content":login})
+        self.myconnection.send(message)
