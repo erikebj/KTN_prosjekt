@@ -69,14 +69,14 @@ if __name__ == '__main__':
     print("What is your name?")
     client.login(raw_input(">>> "))
     while (True):
-        inputen = raw_input(">>> ").lower()
-        if inputen == "logout":
+        inputen = raw_input(">>> ")
+        if inputen.lower() == "logout":
             client.disconnect()
-        elif inputen == "history":
+        elif inputen.lower() == "history":
             client.send_payload("getHistory")
-        elif inputen == "names":
+        elif inputen.lower() == "names":
             client.send_payload("getNames")
-        elif inputen == "help":
+        elif inputen.lower() == "help":
             client.send_payload("getHelp")
         else:
             client.send_payload(inputen)
